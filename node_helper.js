@@ -2,6 +2,7 @@
 
 const NodeHelper = require("node_helper");
 const tibber = require("./tibber");
+const ferroamp = require("./ferroamp");
 
 module.exports = NodeHelper.create({
   start: function() {
@@ -43,6 +44,8 @@ module.exports = NodeHelper.create({
         setInterval(function() {
           self.readTibberData(config);
         }, 1000 * 60 * 5); // Every 5 minutes
+
+        ferroamp.connect(config.ferroampIp, config.ferroampPort, config.ferroampToken)
       }
     }
   },
@@ -92,5 +95,6 @@ module.exports = NodeHelper.create({
 
   stop: function() {
     tibber.close();
+    ferroamp.close();
   }
 });
